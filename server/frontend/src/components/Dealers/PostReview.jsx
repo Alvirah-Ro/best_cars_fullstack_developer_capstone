@@ -114,7 +114,7 @@ const PostReview = () => {
       </div>
 
       <div>
-      <button className='postreview' onClick={postreview} style='background-color:darkturquoise'>Post Review</button>
+      <button className='postreview' onClick={postreview} style={{backgroundCColor:"darkturquoise"}}>Post Review</button>
       </div>
     </div>
     </div>
