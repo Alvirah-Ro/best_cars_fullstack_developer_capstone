@@ -130,11 +130,6 @@ def get_dealer_reviews(request, dealer_id):
     else:
         return JsonResponse([{"status": 400, "message": "Bad Request"}])
 
-elif "sentiment" in response:
-    review_detail["sentiment"] = response["sentiment"]
-else:
-    review_detail["sentiment"] = "unknown"
-
 
 # Create a `get_dealer_details` view to render the dealer details
 
