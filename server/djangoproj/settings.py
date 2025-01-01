@@ -28,8 +28,15 @@ SECRET_KEY =\
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'https://bajoraneh-8000.theianext-1-labs-prod-misc-tools-us-east-0.proxy.cognitiveclass.ai']
-CSRF_TRUSTED_ORIGINS = ['https://bajoraneh-8000.theiadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai']
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    'https://bajoraneh-8000.theianext-1-labs-prod-misc-tools-us-east-0.proxy.cognitiveclass.ai'
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://bajoraneh-8000.theiadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai'
+]
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [],
@@ -54,7 +61,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware','django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
 ]
 
 ROOT_URLCONF = 'djangoproj.urls'
@@ -68,7 +75,7 @@ TEMPLATES = [
             os.path.join(BASE_DIR, 'frontend/build/static'),
             os.path.join(BASE_DIR, 'frontend/public'),
             os.path.join(BASE_DIR, 'frontend/src'),
-            
+ 
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -147,4 +154,3 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'frontend/build'),
     os.path.join(BASE_DIR, 'frontend/build/static'),
 ]
-

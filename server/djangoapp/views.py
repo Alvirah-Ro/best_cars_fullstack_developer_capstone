@@ -28,7 +28,7 @@ def login_user(request):
     password = data['password']
     # Try to check if provide credential can be authenticated
     user = authenticate(username=username, password=password)
-    data = {"userName" : username}
+    data = {"userName": username}
     if user is not None:
         # If user is valid, call login method to login current user
         login(request, user)
@@ -46,7 +46,7 @@ def logout(request):
 @csrf_exempt
 def registration(request):
     context = {}
-    
+
     data = json.loads(request.body)
     username = data['userName']
     password = data['password']
@@ -59,14 +59,21 @@ def registration(request):
         # Check if user already exists
         User.objects.get(username=username)
         username_exist = True
-    except:
+    except Exception as e:
+        print(f"Error: {e}")
         # If not, simply log this is a new user
         logger.debug("{} is a new user".format(username))
 
     # If it is a new user
     if not username_exist:
         # Create user in auth_user table
-        user = User.objects.create_user(username=username, first_name=first_name, last_name=last_name, password=password, email=email)
+        user = User.objects.create_user(
+            username=username,
+            first_name=first_name,
+            last_name=last_name,
+            password=password,
+            email=email
+        )
         # Login the user and redirect to list page
         login(request, user)
         data = {"userName": username, "status": "Authenticated"}
@@ -79,7 +86,7 @@ def registration(request):
 def get_cars(request):
     count = CarMake.objects.filter().count()
     print(count)
-    if(count == 0):
+    if (count == 0):
         initiate()
     car_models = CarModel.objects.select_related('car_make')
     cars = []
@@ -129,12 +136,12 @@ def get_dealer_reviews(request, dealer_id):
 
 # Create a `get_dealer_details` view to render the dealer details
 def get_dealer_details(request, dealer_id):
-    if(dealer_id):
+    if (dealer_id):
         endpoint = "/fetchDealer/"+str(dealer_id)
         dealership = get_request(endpoint)
-        return JsonResponse({"status": 200,"dealer": dealership})
+        return JsonResponse({"status": 200, "dealer": dealership})
     else:
-        return JsonResponse({"status": 400,"message": "Bad Request"})
+        return JsonResponse({"status": 400, "message": "Bad Request"})
 
 
 # Create a `add_review` view to submit a review
@@ -155,9 +162,10 @@ def add_review(request):
         except Exception as e:
             print(f"Error: {e}")
             return JsonResponse(
-                {"status": 401,"message": "Error in posting review"})
+                {"status": 401, "message": "Error in posting review"}
+            )
     else:
-        return JsonResponse({"status": 403,"message": "Unauthorized"})
+        return JsonResponse({"status": 403, "message": "Unauthorized"})
 
 
 @ensure_csrf_cookie
