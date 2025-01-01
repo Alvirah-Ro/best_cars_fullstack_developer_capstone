@@ -1,12 +1,8 @@
 
 from django.shortcuts import render
-from django.http import HttpResponseRedirect, HttpResponse
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.models import User
-from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth import logout
-from django.contrib import messages
-from datetime import datetime
 from .models import CarMake, CarModel
 from .populate import initiate
 from .restapis import get_request, analyze_review_sentiments, post_review
@@ -35,16 +31,16 @@ def login_user(request):
     password = data['password']
     # Try to check if provide credential can be authenticated
     user = authenticate(username=username, password=password)
-    data = {"userName": username}
+    data = {"userName" : username}
     if user is not None:
         # If user is valid, call login method to login current user
         login(request, user)
-        data = {"userName": username, "status": "Authenticated"}
+        data = {"userName" : username, "status" : "Authenticated"}
     return JsonResponse(data)
 
 # Create a `logout_request` view to handle sign out request
 def logout(request):
-    data = {"userName":""}
+    data = {"userName" : ""}
     return JsonResponse(data)
 
 # Create a `registration` view to handle sign up request
@@ -126,9 +122,9 @@ def get_dealer_reviews(request, dealer_id):
             else:
                 review_detail["sentiment"] = "unknown"
 
-        return JsonResponse({"status": 200, "reviews": reviews})
+        return JsonResponse({"status" : 200, "reviews" : reviews})
     else:
-        return JsonResponse([{"status": 400, "message": "Bad Request"}])
+        return JsonResponse([{"status" : 400, "message" : "Bad Request"}])
 
 
 # Create a `get_dealer_details` view to render the dealer details
@@ -137,9 +133,9 @@ def get_dealer_details(request, dealer_id):
     if(dealer_id):
         endpoint = "/fetchDealer/"+str(dealer_id)
         dealership = get_request(endpoint)
-        return JsonResponse({"status":200,"dealer":dealership})
+        return JsonResponse({"status" : 200,"dealer" : dealership})
     else:
-        return JsonResponse({"status":400,"message":"Bad Request"})
+        return JsonResponse({"status" : 400,"message" : "Bad Request"})
 
 # Create a `add_review` view to submit a review
 
@@ -155,11 +151,11 @@ def add_review(request):
             return JsonResponse({"status":200})
         except json.JSONDecodeError:
             print("JSONDecodeError: Invalid JSON in request body.")
-            return JsonResponse({"status": 400, "message": "Invalid JSON format"})
+            return JsonResponse({"status" : 400, "message" : "Invalid JSON format"})
         except:
-            return JsonResponse({"status":401,"message":"Error in posting review"})
+            return JsonResponse({"status" : 401,"message" : "Error in posting review"})
     else:
-        return JsonResponse({"status":403,"message":"Unauthorized"})
+        return JsonResponse({"status" : 403,"message" : "Unauthorized"})
 
 @ensure_csrf_cookie
 def index_view(request):
